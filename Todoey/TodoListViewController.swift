@@ -5,9 +5,15 @@ class TodoListViewController: UITableViewController {
     
     var itemArray = ["Find mike", "Buy Eggos", "Destroy Demogorgon"]
     
+    let defaults = UserDefaults.standard // initializing user default
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        if let items = defaults.array(forKey: "TodoListArray") as? [String] {
+            itemArray = items
+        }
     }
     
     //MARK: - TableView DataSource
@@ -63,6 +69,7 @@ class TodoListViewController: UITableViewController {
             // what will happen once the user clicks the Done button
             if textField.text == "" {} else {self.itemArray.append((textField.text)!)} // adding the text to out array if it is not empty
             self.tableView.reloadData() // refreshing the tableView
+            self.defaults.set(self.itemArray, forKey: "TodoListArray") // setting the new array to userDefaults
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .default) { action in
