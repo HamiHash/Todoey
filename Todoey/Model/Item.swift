@@ -1,7 +1,7 @@
 
 import Foundation
 
-class Item {
+class Item: Codable {
     let titel: String
     var done: Bool = false
     

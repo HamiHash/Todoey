@@ -5,30 +5,22 @@ class TodoListViewController: UITableViewController {
     
     var itemArray = [Item]()
     
-    let defaults = UserDefaults.standard // initializing user default
+    //    let defaults = UserDefaults.standard // initializing user default (we are not useDefault anymore here)
+    
+    // craeting the file to store data
+    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("userTodoItems")
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        if let items = defaults.object(forKey: "TodoListItems") as? [Item] {
-            itemArray = items
-        }
         
-        let item1 = Item(titel: "do the math", done: false)
-        itemArray.append(item1)
         
-        let item2 = Item(titel: "walk dog", done: false)
-        itemArray.append(item2)
+        //        if let items = defaults.object(forKey: "TodoListItems") as? [Item] {
+        //            itemArray = items
+        //        }
         
-        let item3 = Item(titel: "wash car", done: false)
-        itemArray.append(item3)
-        
-        let item4 = Item(titel: "play rainbow six siege", done: false)
-        itemArray.append(item4)
-        
-        let item5 = Item(titel: "do the math5", done: false)
-        itemArray.append(item5)
+        loadData()
     }
     
     //MARK: - TableView DataSource
@@ -45,7 +37,7 @@ class TodoListViewController: UITableViewController {
         cell.textLabel?.text = item.titel // setting the label
         
         cell.accessoryType = item.done ? .checkmark : .none // setting the items checkmark
-       
+        
         return cell
     }
     
@@ -53,13 +45,14 @@ class TodoListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        print(itemArray[indexPath.row])
-        
         // adding, removing the checkamrk
         itemArray[indexPath.row].done = !itemArray[indexPath.row].done
         
+        self.saveData()
+        
         // reloading to update the UI
         tableView.reloadData()
+        
         
         // This will make the clicked item "flash". (or deselect)
         tableView.deselectRow(at: indexPath, animated: true)
@@ -93,9 +86,12 @@ class TodoListViewController: UITableViewController {
                 self.itemArray.append(newItem)
             }
             
+            self.saveData()
+            
             self.tableView.reloadData() // refreshing the tableView
             
-            self.defaults.set(self.itemArray, forKey: "TodoListItems") // setting the new array to userDefaults
+            // setting the new array to userDefaults (we are not using userDfault for this anymore)
+            // self.defaults.set(self.itemArray, forKey: "TodoListItems")
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .default) { action in
@@ -107,4 +103,28 @@ class TodoListViewController: UITableViewController {
         
         present (alert, animated: true, completion: nil) // presenting the alert
     }
+    
+    // saves the itemArray in our "dataFilePath"
+    func saveData() {
+        let encoder = PropertyListEncoder()
+        
+        do {
+            let data = try encoder.encode(itemArray)
+            try data.write(to: dataFilePath!)
+        } catch {
+            print("error while encoding")
+        }
+    }
+    
+    func loadData() {
+        if let data = try? Data(contentsOf: dataFilePath!) {
+            let decoder = PropertyListDecoder()
+            do {
+                itemArray = try decoder.decode([Item].self, from: data)
+            } catch {
+                print("error while decoding")
+            }
+        }
+    }
 }
+
