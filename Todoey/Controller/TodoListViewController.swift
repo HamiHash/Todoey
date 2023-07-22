@@ -5,7 +5,12 @@ import CoreData
 class TodoListViewController: UITableViewController {
     
     var itemArray = [Item]()
-    
+    var selectedCategory: Category? {
+        didSet {
+            navigationItem.title = selectedCategory?.name
+            loadData()
+        }
+    }
     // we get the context in the "AppDelegate" like this:
     // more about this line at "018 How to Save Data with Core Data" 2:35
     // code in the () is basically AppDelegate in an Object form "not class", and we can accessed 'context' from it
@@ -14,10 +19,10 @@ class TodoListViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
 
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
-        
-        loadData()
     }
     
     //MARK: - TableView DataSource
@@ -27,12 +32,10 @@ class TodoListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ItemCell", for: indexPath) // creating cells
+        
         let item = itemArray[indexPath.row]
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath) // creating cells
-        
         cell.textLabel?.text = item.title // setting the label
-        
         cell.accessoryType = item.done ? .checkmark : .none // setting the items checkmark
         
         return cell
@@ -87,6 +90,7 @@ class TodoListViewController: UITableViewController {
                 let newItem = Item(context: self.context)
                 newItem.title = enteredText
                 newItem.done = false
+                newItem.parentCategory = self.selectedCategory
                 self.itemArray.append(newItem)
                 self.saveData()
             }
@@ -118,7 +122,12 @@ class TodoListViewController: UITableViewController {
     }
     
     // we can call this with custom request, like when searching and sorting.
-    func loadData(with request: NSFetchRequest<Item> = Item.fetchRequest()) {
+    func loadData(with request: NSFetchRequest<Item> = Item.fetchRequest(), predicate: NSPredicate? = nil) {
+        let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory!.name!)
+        if predicate == nil {
+            request.predicate = categoryPredicate
+        } else {
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, predicate!])        }
          do {
              itemArray = try context.fetch(request)
         } catch {
@@ -127,17 +136,19 @@ class TodoListViewController: UITableViewController {
     }
 }
 
+//MARK: - UISearchBarDelegate
+
 extension TodoListViewController: UISearchBarDelegate {
-    
+
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         // we should edit the request so we should declare it:
         let request : NSFetchRequest<Item> = Item.fetchRequest()
         // this means that it contans whats in the entered text
-        request.predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
+        let searchPredicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
         // the will order it
         request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
         // we load the data with our custom request
-        loadData(with: request)
+        loadData(with: request, predicate: searchPredicate)
         // reload the UI
         tableView.reloadData()
     }

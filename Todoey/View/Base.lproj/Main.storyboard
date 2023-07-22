@@ -25,7 +25,7 @@
                             </connections>
                         </searchBar>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ToDoItemCell" id="AeR-uz-7ES">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ItemCell" id="AeR-uz-7ES">
                                 <rect key="frame" x="0.0" y="94" width="393" height="43.666667938232422"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="AeR-uz-7ES" id="H6L-sI-mHO">
@@ -78,7 +78,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="l2H-Nb-IjA">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CategoryCell" id="l2H-Nb-IjA" userLabel="CategoryCell">
                                 <rect key="frame" x="0.0" y="50" width="393" height="43.666667938232422"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="l2H-Nb-IjA" id="K3m-OA-xkS">
@@ -93,15 +93,19 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Todoey" id="vnC-ki-Lh7">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Kcv-Bw-kfa"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Kcv-Bw-kfa">
+                            <connections>
+                                <action selector="addButtonPressed:" destination="7o7-9V-jgD" id="VvI-K9-HgA"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="L5j-Pd-MAa" kind="show" identifier="goToItem" id="Rae-ug-CuH"/>
+                        <segue destination="L5j-Pd-MAa" kind="show" identifier="goToItems" id="Rae-ug-CuH"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="324-Oq-il0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-622" y="-56"/>
+            <point key="canvasLocation" x="-622.13740458015263" y="-56.338028169014088"/>
         </scene>
     </scenes>
     <resources>
