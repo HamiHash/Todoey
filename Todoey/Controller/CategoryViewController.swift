@@ -1,7 +1,7 @@
 import UIKit
 import RealmSwift
 
-class CategoryViewController: UITableViewController {
+class CategoryViewController: EditViewController {
     
     let realm = try! Realm()
     var categories: Results<Category>?
@@ -29,7 +29,7 @@ class CategoryViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "goToItems", sender: self)
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationVC = segue.destination as! TodoListViewController //  to target the TodoListViewCrontroller
         // get the selected category from "selected row" and then setting it to a property in TodoListTableView
@@ -68,9 +68,6 @@ class CategoryViewController: UITableViewController {
             }
             
             self.tableView.reloadData() // refreshing the tableView
-            
-            // setting the new array to userDefaults (we are not using userDfault for this anymore)
-            // self.defaults.set(self.itemArray, forKey: "TodoListItems")
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .default) { action in
@@ -97,5 +94,15 @@ class CategoryViewController: UITableViewController {
     func loadData() {
         categories = realm.objects(Category.self)
         tableView.reloadData()
+    }
+    
+    override func updateModal(at indexPath: IndexPath) {
+        do {
+            try realm.write {
+                realm.delete(categories![indexPath.row])
+            }
+        } catch {
+            print("error deleting the row: \(error)")
+        }
     }
 }

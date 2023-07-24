@@ -56,8 +56,8 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="q1X-H7-U2S" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Y6u-az-j2P">
-                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="Y6u-az-j2P">
+                        <rect key="frame" x="0.0" y="59" width="393" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -93,7 +93,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Todoey" id="vnC-ki-Lh7">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Kcv-Bw-kfa">
+                        <barButtonItem key="rightBarButtonItem" title="New" id="Kcv-Bw-kfa">
                             <connections>
                                 <action selector="addButtonPressed:" destination="7o7-9V-jgD" id="VvI-K9-HgA"/>
                             </connections>
