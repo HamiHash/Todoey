@@ -15,6 +15,7 @@
 		FF29A40B2A6D9A8300E0E118 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF29A40A2A6D9A8300E0E118 /* Item.swift */; };
 		FF29A40D2A6D9EDD00E0E118 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF29A40C2A6D9EDD00E0E118 /* Category.swift */; };
 		FF2D555D2A6B40F8005152A8 /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2D555C2A6B40F8005152A8 /* CategoryViewController.swift */; };
+		FF31FE382A6F1B6300B00D0F /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF31FE372A6F1B6300B00D0F /* EditViewController.swift */; };
 		FF4E3BFA2A6C8BA500225F42 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = FF4E3BF92A6C8BA500225F42 /* Realm */; };
 		FF4E3BFC2A6C8BA500225F42 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = FF4E3BFB2A6C8BA500225F42 /* RealmSwift */; };
 /* End PBXBuildFile section */
@@ -30,6 +31,7 @@
 		FF29A40A2A6D9A8300E0E118 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		FF29A40C2A6D9EDD00E0E118 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		FF2D555C2A6B40F8005152A8 /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
+		FF31FE372A6F1B6300B00D0F /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +97,7 @@
 		FFB8CC662A6438BE00588315 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				FF31FE372A6F1B6300B00D0F /* EditViewController.swift */,
 				FF2D555C2A6B40F8005152A8 /* CategoryViewController.swift */,
 				EB2BE4FD239524DB00FB933B /* TodoListViewController.swift */,
 			);
@@ -182,6 +185,7 @@
 			files = (
 				FF29A40B2A6D9A8300E0E118 /* Item.swift in Sources */,
 				FF2D555D2A6B40F8005152A8 /* CategoryViewController.swift in Sources */,
+				FF31FE382A6F1B6300B00D0F /* EditViewController.swift in Sources */,
 				EB2BE4FE239524DB00FB933B /* TodoListViewController.swift in Sources */,
 				EB2BE4FA239524DB00FB933B /* AppDelegate.swift in Sources */,
 				FF29A40D2A6D9EDD00E0E118 /* Category.swift in Sources */,

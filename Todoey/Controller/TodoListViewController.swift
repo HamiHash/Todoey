@@ -2,7 +2,7 @@ import UIKit
 import RealmSwift
 
 // if we use a "tableviewcontroller", we should use tableview methods without setting the datasource and delegate (so its easier this way)
-class TodoListViewController: UITableViewController {
+class TodoListViewController: EditViewController {
     
     var todoItems: Results<Item>?
     let realm = try! Realm()
@@ -107,14 +107,22 @@ class TodoListViewController: UITableViewController {
         alert.addAction(doneAction)
         alert.addAction(cancelAction)
         
-        present (alert, animated: true, completion: nil) // presenting the alert
+        present(alert, animated: true, completion: nil) // presenting the alert
     }
     
-    
-    // we can call this with custom request, like when searching and sorting.
     func loadData() {
         todoItems = selectedCategory?.items.sorted(byKeyPath: "date", ascending: true)
         tableView.reloadData()
+    }
+    
+    override func updateModal(at indexPath: IndexPath) {
+        do {
+            try realm.write {
+                realm.delete(todoItems![indexPath.row])
+            }
+        } catch {
+            print("error deleting the row: \(error)")
+        }
     }
 }
 
